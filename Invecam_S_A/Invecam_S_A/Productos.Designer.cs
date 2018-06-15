@@ -30,16 +30,10 @@
         {
             this.tabListadoProductos = new System.Windows.Forms.TabControl();
             this.tabListadoP = new System.Windows.Forms.TabPage();
-            this.button6 = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.textBuscar1 = new System.Windows.Forms.TextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.tabIngresarP = new System.Windows.Forms.TabPage();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
             this.textBuscar2 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -51,6 +45,15 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtProducto = new System.Windows.Forms.TextBox();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.btnSearch1 = new System.Windows.Forms.Button();
+            this.btnUpdate = new System.Windows.Forms.Button();
+            this.btnNew = new System.Windows.Forms.Button();
+            this.btnSearch2 = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnEdit = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
             this.tabListadoProductos.SuspendLayout();
             this.tabListadoP.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -70,7 +73,7 @@
             // 
             // tabListadoP
             // 
-            this.tabListadoP.Controls.Add(this.button6);
+            this.tabListadoP.Controls.Add(this.btnSearch1);
             this.tabListadoP.Controls.Add(this.label6);
             this.tabListadoP.Controls.Add(this.textBuscar1);
             this.tabListadoP.Controls.Add(this.dataGridView1);
@@ -82,15 +85,6 @@
             this.tabListadoP.Text = "Listado de productos";
             this.tabListadoP.UseVisualStyleBackColor = true;
             this.tabListadoP.Click += new System.EventHandler(this.tabListadoP_Click);
-            // 
-            // button6
-            // 
-            this.button6.Image = global::Invecam_S_A.Properties.Resources.ic_search_black_30dp;
-            this.button6.Location = new System.Drawing.Point(1699, 39);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(67, 65);
-            this.button6.TabIndex = 19;
-            this.button6.UseVisualStyleBackColor = true;
             // 
             // label6
             // 
@@ -121,11 +115,13 @@
             // 
             // tabIngresarP
             // 
-            this.tabIngresarP.Controls.Add(this.button5);
-            this.tabIngresarP.Controls.Add(this.button4);
-            this.tabIngresarP.Controls.Add(this.button3);
-            this.tabIngresarP.Controls.Add(this.button2);
-            this.tabIngresarP.Controls.Add(this.button1);
+            this.tabIngresarP.Controls.Add(this.btnUpdate);
+            this.tabIngresarP.Controls.Add(this.btnNew);
+            this.tabIngresarP.Controls.Add(this.btnSearch2);
+            this.tabIngresarP.Controls.Add(this.btnDelete);
+            this.tabIngresarP.Controls.Add(this.btnCancel);
+            this.tabIngresarP.Controls.Add(this.btnEdit);
+            this.tabIngresarP.Controls.Add(this.btnSave);
             this.tabIngresarP.Controls.Add(this.label5);
             this.tabIngresarP.Controls.Add(this.textBuscar2);
             this.tabIngresarP.Controls.Add(this.label1);
@@ -137,6 +133,7 @@
             this.tabIngresarP.Controls.Add(this.label2);
             this.tabIngresarP.Controls.Add(this.txtProducto);
             this.tabIngresarP.Controls.Add(this.dataGridView2);
+            this.tabIngresarP.Controls.Add(this.panel1);
             this.tabIngresarP.Location = new System.Drawing.Point(8, 39);
             this.tabIngresarP.Name = "tabIngresarP";
             this.tabIngresarP.Padding = new System.Windows.Forms.Padding(3);
@@ -144,51 +141,6 @@
             this.tabIngresarP.TabIndex = 1;
             this.tabIngresarP.Text = "Ingresar productos";
             this.tabIngresarP.UseVisualStyleBackColor = true;
-            // 
-            // button5
-            // 
-            this.button5.Image = global::Invecam_S_A.Properties.Resources.ic_search_black_30dp;
-            this.button5.Location = new System.Drawing.Point(1678, 290);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(67, 65);
-            this.button5.TabIndex = 16;
-            this.button5.UseVisualStyleBackColor = true;
-            // 
-            // button4
-            // 
-            this.button4.Image = global::Invecam_S_A.Properties.Resources.ic_delete_android30;
-            this.button4.Location = new System.Drawing.Point(1690, 11);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(68, 61);
-            this.button4.TabIndex = 15;
-            this.button4.UseVisualStyleBackColor = true;
-            // 
-            // button3
-            // 
-            this.button3.Image = global::Invecam_S_A.Properties.Resources.ic_cancel_black_30dp;
-            this.button3.Location = new System.Drawing.Point(1598, 11);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(70, 61);
-            this.button3.TabIndex = 14;
-            this.button3.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Image = global::Invecam_S_A.Properties.Resources.ic_edit_black_30dp;
-            this.button2.Location = new System.Drawing.Point(1511, 11);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(66, 61);
-            this.button2.TabIndex = 13;
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            this.button1.Image = global::Invecam_S_A.Properties.Resources.ic_save_black_30dp;
-            this.button1.Location = new System.Drawing.Point(1418, 11);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(73, 61);
-            this.button1.TabIndex = 12;
-            this.button1.UseVisualStyleBackColor = true;
             // 
             // label5
             // 
@@ -289,6 +241,85 @@
             this.dataGridView2.Size = new System.Drawing.Size(1702, 444);
             this.dataGridView2.TabIndex = 0;
             // 
+            // panel1
+            // 
+            this.panel1.Location = new System.Drawing.Point(26, 77);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1732, 192);
+            this.panel1.TabIndex = 17;
+            // 
+            // btnSearch1
+            // 
+            this.btnSearch1.Image = global::Invecam_S_A.Properties.Resources.ic_search_black_30dp;
+            this.btnSearch1.Location = new System.Drawing.Point(1699, 39);
+            this.btnSearch1.Name = "btnSearch1";
+            this.btnSearch1.Size = new System.Drawing.Size(67, 65);
+            this.btnSearch1.TabIndex = 19;
+            this.btnSearch1.UseVisualStyleBackColor = true;
+            // 
+            // btnUpdate
+            // 
+            this.btnUpdate.Image = global::Invecam_S_A.Properties.Resources.ic_update_black_48dp;
+            this.btnUpdate.Location = new System.Drawing.Point(123, 11);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(73, 61);
+            this.btnUpdate.TabIndex = 19;
+            this.btnUpdate.UseVisualStyleBackColor = true;
+            // 
+            // btnNew
+            // 
+            this.btnNew.Image = global::Invecam_S_A.Properties.Resources.ic_fiber_new_black_30dp;
+            this.btnNew.Location = new System.Drawing.Point(26, 11);
+            this.btnNew.Name = "btnNew";
+            this.btnNew.Size = new System.Drawing.Size(73, 61);
+            this.btnNew.TabIndex = 18;
+            this.btnNew.UseVisualStyleBackColor = true;
+            // 
+            // btnSearch2
+            // 
+            this.btnSearch2.Image = global::Invecam_S_A.Properties.Resources.ic_search_black_30dp;
+            this.btnSearch2.Location = new System.Drawing.Point(1678, 290);
+            this.btnSearch2.Name = "btnSearch2";
+            this.btnSearch2.Size = new System.Drawing.Size(67, 65);
+            this.btnSearch2.TabIndex = 16;
+            this.btnSearch2.UseVisualStyleBackColor = true;
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.Image = global::Invecam_S_A.Properties.Resources.ic_delete_android30;
+            this.btnDelete.Location = new System.Drawing.Point(1690, 11);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(68, 61);
+            this.btnDelete.TabIndex = 15;
+            this.btnDelete.UseVisualStyleBackColor = true;
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Image = global::Invecam_S_A.Properties.Resources.ic_cancel_black_30dp;
+            this.btnCancel.Location = new System.Drawing.Point(1598, 11);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(70, 61);
+            this.btnCancel.TabIndex = 14;
+            this.btnCancel.UseVisualStyleBackColor = true;
+            // 
+            // btnEdit
+            // 
+            this.btnEdit.Image = global::Invecam_S_A.Properties.Resources.ic_edit_black_30dp;
+            this.btnEdit.Location = new System.Drawing.Point(1511, 11);
+            this.btnEdit.Name = "btnEdit";
+            this.btnEdit.Size = new System.Drawing.Size(66, 61);
+            this.btnEdit.TabIndex = 13;
+            this.btnEdit.UseVisualStyleBackColor = true;
+            // 
+            // btnSave
+            // 
+            this.btnSave.Image = global::Invecam_S_A.Properties.Resources.ic_save_black_30dp;
+            this.btnSave.Location = new System.Drawing.Point(1418, 11);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(73, 61);
+            this.btnSave.TabIndex = 12;
+            this.btnSave.UseVisualStyleBackColor = true;
+            // 
             // Productos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
@@ -326,15 +357,18 @@
         private System.Windows.Forms.TextBox txtProducto;
         private System.Windows.Forms.DataGridView dataGridView2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox textBuscar2;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBuscar1;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button btnSearch2;
+        private System.Windows.Forms.Button btnDelete;
+        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnEdit;
+        private System.Windows.Forms.Button btnSearch1;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button btnUpdate;
+        private System.Windows.Forms.Button btnNew;
     }
 }

@@ -1,0 +1,710 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Almacenes_DB2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Combo_Product">
+          <Key>
+            <PropertyRef Name="comboID" />
+            <PropertyRef Name="productID" />
+          </Key>
+          <Property Name="comboID" Type="int" Nullable="false" />
+          <Property Name="productID" Type="int" Nullable="false" />
+          <Property Name="quantityPCombo" Type="int" />
+          <Property Name="descriptionCP" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Combos">
+          <Key>
+            <PropertyRef Name="comboID" />
+          </Key>
+          <Property Name="comboID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="descriptionC" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="customerID" />
+          </Key>
+          <Property Name="customerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="telephone" Type="varchar" MaxLength="50" />
+          <Property Name="customerName" Type="varchar" MaxLength="50" />
+          <Property Name="identificationCard" Type="varchar" MaxLength="50" />
+          <Property Name="routeID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Delivery">
+          <Key>
+            <PropertyRef Name="deliveryID" />
+          </Key>
+          <Property Name="deliveryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="deliveryName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Detail_Order">
+          <Key>
+            <PropertyRef Name="orderID" />
+            <PropertyRef Name="productID" />
+          </Key>
+          <Property Name="orderID" Type="int" Nullable="false" />
+          <Property Name="productID" Type="int" Nullable="false" />
+          <Property Name="quantityPOrder" Type="int" />
+          <Property Name="descriptionDO" Type="varchar" MaxLength="50" />
+          <Property Name="discount" Type="int" />
+        </EntityType>
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="employeesID" />
+          </Key>
+          <Property Name="employeesID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="employeeName" Type="varchar" MaxLength="50" />
+          <Property Name="employeeLastName" Type="varchar" MaxLength="50" />
+          <Property Name="e_UserName" Type="varchar" MaxLength="50" />
+          <Property Name="e_Password" Type="varchar" MaxLength="50" />
+          <Property Name="typeEmployee" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="orderID" />
+          </Key>
+          <Property Name="orderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dateOrder" Type="date" />
+          <Property Name="status1" Type="varchar" MaxLength="50" />
+          <Property Name="status2" Type="varchar" MaxLength="50" />
+          <Property Name="code" Type="varchar" MaxLength="50" />
+          <Property Name="deliveryDay" Type="varchar" MaxLength="50" />
+          <Property Name="typeOfSale" Type="varchar" MaxLength="50" />
+          <Property Name="totalDiscount" Type="int" />
+          <Property Name="routeID" Type="int" Nullable="false" />
+          <Property Name="customerID" Type="int" Nullable="false" />
+          <Property Name="deliveryID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="productID" />
+          </Key>
+          <Property Name="productID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="productName" Type="varchar" MaxLength="50" />
+          <Property Name="productPresentation" Type="varchar" MaxLength="50" />
+          <Property Name="costPrice" Type="float" />
+          <Property Name="salePrice" Type="float" />
+          <Property Name="unitInStop" Type="int" />
+        </EntityType>
+        <EntityType Name="Routes">
+          <Key>
+            <PropertyRef Name="routeID" />
+          </Key>
+          <Property Name="routeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="routeName" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Routes_Delivery">
+          <Key>
+            <PropertyRef Name="routeID" />
+            <PropertyRef Name="deliveryID" />
+          </Key>
+          <Property Name="routeID" Type="int" Nullable="false" />
+          <Property Name="deliveryID" Type="int" Nullable="false" />
+          <Property Name="descriptionRD" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_comboID_CP">
+          <End Role="Combos" Type="Self.Combos" Multiplicity="1" />
+          <End Role="Combo_Product" Type="Self.Combo_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Combos">
+              <PropertyRef Name="comboID" />
+            </Principal>
+            <Dependent Role="Combo_Product">
+              <PropertyRef Name="comboID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_customerID_Orders">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="customerID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="customerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_deliveryID_Orders">
+          <End Role="Delivery" Type="Self.Delivery" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Delivery">
+              <PropertyRef Name="deliveryID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="deliveryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_deliveryID_RD">
+          <End Role="Delivery" Type="Self.Delivery" Multiplicity="1" />
+          <End Role="Routes_Delivery" Type="Self.Routes_Delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Delivery">
+              <PropertyRef Name="deliveryID" />
+            </Principal>
+            <Dependent Role="Routes_Delivery">
+              <PropertyRef Name="deliveryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_orderID_DO">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="Detail_Order" Type="Self.Detail_Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="orderID" />
+            </Principal>
+            <Dependent Role="Detail_Order">
+              <PropertyRef Name="orderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_productID_CP">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="Combo_Product" Type="Self.Combo_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="productID" />
+            </Principal>
+            <Dependent Role="Combo_Product">
+              <PropertyRef Name="productID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_productID_DO">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="Detail_Order" Type="Self.Detail_Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="productID" />
+            </Principal>
+            <Dependent Role="Detail_Order">
+              <PropertyRef Name="productID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_routeID_CUSTOMERS">
+          <End Role="Routes" Type="Self.Routes" Multiplicity="1" />
+          <End Role="Customers" Type="Self.Customers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Routes">
+              <PropertyRef Name="routeID" />
+            </Principal>
+            <Dependent Role="Customers">
+              <PropertyRef Name="routeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_routeID_Orders">
+          <End Role="Routes" Type="Self.Routes" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Routes">
+              <PropertyRef Name="routeID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="routeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_routeID_RD">
+          <End Role="Routes" Type="Self.Routes" Multiplicity="1" />
+          <End Role="Routes_Delivery" Type="Self.Routes_Delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Routes">
+              <PropertyRef Name="routeID" />
+            </Principal>
+            <Dependent Role="Routes_Delivery">
+              <PropertyRef Name="routeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Almacenes_DB2ModelStoreContainer">
+          <EntitySet Name="Combo_Product" EntityType="Self.Combo_Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Combos" EntityType="Self.Combos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Delivery" EntityType="Self.Delivery" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Detail_Order" EntityType="Self.Detail_Order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Routes" EntityType="Self.Routes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Routes_Delivery" EntityType="Self.Routes_Delivery" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_comboID_CP" Association="Self.FK_comboID_CP">
+            <End Role="Combos" EntitySet="Combos" />
+            <End Role="Combo_Product" EntitySet="Combo_Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_customerID_Orders" Association="Self.FK_customerID_Orders">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_deliveryID_Orders" Association="Self.FK_deliveryID_Orders">
+            <End Role="Delivery" EntitySet="Delivery" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_deliveryID_RD" Association="Self.FK_deliveryID_RD">
+            <End Role="Delivery" EntitySet="Delivery" />
+            <End Role="Routes_Delivery" EntitySet="Routes_Delivery" />
+          </AssociationSet>
+          <AssociationSet Name="FK_orderID_DO" Association="Self.FK_orderID_DO">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Detail_Order" EntitySet="Detail_Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_productID_CP" Association="Self.FK_productID_CP">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Combo_Product" EntitySet="Combo_Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_productID_DO" Association="Self.FK_productID_DO">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Detail_Order" EntitySet="Detail_Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_routeID_CUSTOMERS" Association="Self.FK_routeID_CUSTOMERS">
+            <End Role="Routes" EntitySet="Routes" />
+            <End Role="Customers" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_routeID_Orders" Association="Self.FK_routeID_Orders">
+            <End Role="Routes" EntitySet="Routes" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_routeID_RD" Association="Self.FK_routeID_RD">
+            <End Role="Routes" EntitySet="Routes" />
+            <End Role="Routes_Delivery" EntitySet="Routes_Delivery" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Almacenes_DB2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Combo_Product">
+          <Key>
+            <PropertyRef Name="comboID" />
+            <PropertyRef Name="productID" />
+          </Key>
+          <Property Name="comboID" Type="Int32" Nullable="false" />
+          <Property Name="productID" Type="Int32" Nullable="false" />
+          <Property Name="quantityPCombo" Type="Int32" />
+          <Property Name="descriptionCP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Combo" Relationship="Self.FK_comboID_CP" FromRole="Combo_Product" ToRole="Combos" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_productID_CP" FromRole="Combo_Product" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Combo">
+          <Key>
+            <PropertyRef Name="comboID" />
+          </Key>
+          <Property Name="comboID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="descriptionC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Combo_Product" Relationship="Self.FK_comboID_CP" FromRole="Combos" ToRole="Combo_Product" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="customerID" />
+          </Key>
+          <Property Name="customerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="customerName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="identificationCard" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="routeID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_customerID_Orders" FromRole="Customers" ToRole="Orders" />
+          <NavigationProperty Name="Route" Relationship="Self.FK_routeID_CUSTOMERS" FromRole="Customers" ToRole="Routes" />
+        </EntityType>
+        <EntityType Name="Delivery">
+          <Key>
+            <PropertyRef Name="deliveryID" />
+          </Key>
+          <Property Name="deliveryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="deliveryName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_deliveryID_Orders" FromRole="Delivery" ToRole="Orders" />
+          <NavigationProperty Name="Routes_Delivery" Relationship="Self.FK_deliveryID_RD" FromRole="Delivery" ToRole="Routes_Delivery" />
+        </EntityType>
+        <EntityType Name="Detail_Order">
+          <Key>
+            <PropertyRef Name="orderID" />
+            <PropertyRef Name="productID" />
+          </Key>
+          <Property Name="orderID" Type="Int32" Nullable="false" />
+          <Property Name="productID" Type="Int32" Nullable="false" />
+          <Property Name="quantityPOrder" Type="Int32" />
+          <Property Name="descriptionDO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="discount" Type="Int32" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_orderID_DO" FromRole="Detail_Order" ToRole="Orders" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_productID_DO" FromRole="Detail_Order" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="employeesID" />
+          </Key>
+          <Property Name="employeesID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="employeeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="employeeLastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="e_UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="e_Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="typeEmployee" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="orderID" />
+          </Key>
+          <Property Name="orderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="dateOrder" Type="DateTime" Precision="0" />
+          <Property Name="status1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="status2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="deliveryDay" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="typeOfSale" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="totalDiscount" Type="Int32" />
+          <Property Name="routeID" Type="Int32" Nullable="false" />
+          <Property Name="customerID" Type="Int32" Nullable="false" />
+          <Property Name="deliveryID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK_customerID_Orders" FromRole="Orders" ToRole="Customers" />
+          <NavigationProperty Name="Delivery" Relationship="Self.FK_deliveryID_Orders" FromRole="Orders" ToRole="Delivery" />
+          <NavigationProperty Name="Detail_Order" Relationship="Self.FK_orderID_DO" FromRole="Orders" ToRole="Detail_Order" />
+          <NavigationProperty Name="Route" Relationship="Self.FK_routeID_Orders" FromRole="Orders" ToRole="Routes" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="productID" />
+          </Key>
+          <Property Name="productID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="productName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="productPresentation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="costPrice" Type="Double" />
+          <Property Name="salePrice" Type="Double" />
+          <Property Name="unitInStop" Type="Int32" />
+          <NavigationProperty Name="Combo_Product" Relationship="Self.FK_productID_CP" FromRole="Products" ToRole="Combo_Product" />
+          <NavigationProperty Name="Detail_Order" Relationship="Self.FK_productID_DO" FromRole="Products" ToRole="Detail_Order" />
+        </EntityType>
+        <EntityType Name="Route">
+          <Key>
+            <PropertyRef Name="routeID" />
+          </Key>
+          <Property Name="routeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="routeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Customers" Relationship="Self.FK_routeID_CUSTOMERS" FromRole="Routes" ToRole="Customers" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_routeID_Orders" FromRole="Routes" ToRole="Orders" />
+          <NavigationProperty Name="Routes_Delivery" Relationship="Self.FK_routeID_RD" FromRole="Routes" ToRole="Routes_Delivery" />
+        </EntityType>
+        <EntityType Name="Routes_Delivery">
+          <Key>
+            <PropertyRef Name="routeID" />
+            <PropertyRef Name="deliveryID" />
+          </Key>
+          <Property Name="routeID" Type="Int32" Nullable="false" />
+          <Property Name="deliveryID" Type="Int32" Nullable="false" />
+          <Property Name="descriptionRD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Delivery" Relationship="Self.FK_deliveryID_RD" FromRole="Routes_Delivery" ToRole="Delivery" />
+          <NavigationProperty Name="Route" Relationship="Self.FK_routeID_RD" FromRole="Routes_Delivery" ToRole="Routes" />
+        </EntityType>
+        <Association Name="FK_comboID_CP">
+          <End Role="Combos" Type="Self.Combo" Multiplicity="1" />
+          <End Role="Combo_Product" Type="Self.Combo_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Combos">
+              <PropertyRef Name="comboID" />
+            </Principal>
+            <Dependent Role="Combo_Product">
+              <PropertyRef Name="comboID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_productID_CP">
+          <End Role="Products" Type="Self.Product" Multiplicity="1" />
+          <End Role="Combo_Product" Type="Self.Combo_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="productID" />
+            </Principal>
+            <Dependent Role="Combo_Product">
+              <PropertyRef Name="productID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_customerID_Orders">
+          <End Role="Customers" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="customerID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="customerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_routeID_CUSTOMERS">
+          <End Role="Routes" Type="Self.Route" Multiplicity="1" />
+          <End Role="Customers" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Routes">
+              <PropertyRef Name="routeID" />
+            </Principal>
+            <Dependent Role="Customers">
+              <PropertyRef Name="routeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_deliveryID_Orders">
+          <End Role="Delivery" Type="Self.Delivery" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Delivery">
+              <PropertyRef Name="deliveryID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="deliveryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_deliveryID_RD">
+          <End Role="Delivery" Type="Self.Delivery" Multiplicity="1" />
+          <End Role="Routes_Delivery" Type="Self.Routes_Delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Delivery">
+              <PropertyRef Name="deliveryID" />
+            </Principal>
+            <Dependent Role="Routes_Delivery">
+              <PropertyRef Name="deliveryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_orderID_DO">
+          <End Role="Orders" Type="Self.Order" Multiplicity="1" />
+          <End Role="Detail_Order" Type="Self.Detail_Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="orderID" />
+            </Principal>
+            <Dependent Role="Detail_Order">
+              <PropertyRef Name="orderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_productID_DO">
+          <End Role="Products" Type="Self.Product" Multiplicity="1" />
+          <End Role="Detail_Order" Type="Self.Detail_Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="productID" />
+            </Principal>
+            <Dependent Role="Detail_Order">
+              <PropertyRef Name="productID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_routeID_Orders">
+          <End Role="Routes" Type="Self.Route" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Routes">
+              <PropertyRef Name="routeID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="routeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_routeID_RD">
+          <End Role="Routes" Type="Self.Route" Multiplicity="1" />
+          <End Role="Routes_Delivery" Type="Self.Routes_Delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Routes">
+              <PropertyRef Name="routeID" />
+            </Principal>
+            <Dependent Role="Routes_Delivery">
+              <PropertyRef Name="routeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Almacenes_DB2Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Combo_Product" EntityType="Self.Combo_Product" />
+          <EntitySet Name="Combos" EntityType="Self.Combo" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="Deliveries" EntityType="Self.Delivery" />
+          <EntitySet Name="Detail_Order" EntityType="Self.Detail_Order" />
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="Orders" EntityType="Self.Order" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="Routes" EntityType="Self.Route" />
+          <EntitySet Name="Routes_Delivery" EntityType="Self.Routes_Delivery" />
+          <AssociationSet Name="FK_comboID_CP" Association="Self.FK_comboID_CP">
+            <End Role="Combos" EntitySet="Combos" />
+            <End Role="Combo_Product" EntitySet="Combo_Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_productID_CP" Association="Self.FK_productID_CP">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Combo_Product" EntitySet="Combo_Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_customerID_Orders" Association="Self.FK_customerID_Orders">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_routeID_CUSTOMERS" Association="Self.FK_routeID_CUSTOMERS">
+            <End Role="Routes" EntitySet="Routes" />
+            <End Role="Customers" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_deliveryID_Orders" Association="Self.FK_deliveryID_Orders">
+            <End Role="Delivery" EntitySet="Deliveries" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_deliveryID_RD" Association="Self.FK_deliveryID_RD">
+            <End Role="Delivery" EntitySet="Deliveries" />
+            <End Role="Routes_Delivery" EntitySet="Routes_Delivery" />
+          </AssociationSet>
+          <AssociationSet Name="FK_orderID_DO" Association="Self.FK_orderID_DO">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Detail_Order" EntitySet="Detail_Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_productID_DO" Association="Self.FK_productID_DO">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Detail_Order" EntitySet="Detail_Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_routeID_Orders" Association="Self.FK_routeID_Orders">
+            <End Role="Routes" EntitySet="Routes" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_routeID_RD" Association="Self.FK_routeID_RD">
+            <End Role="Routes" EntitySet="Routes" />
+            <End Role="Routes_Delivery" EntitySet="Routes_Delivery" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Almacenes_DB2ModelStoreContainer" CdmEntityContainer="Almacenes_DB2Entities">
+          <EntitySetMapping Name="Combo_Product">
+            <EntityTypeMapping TypeName="Almacenes_DB2Model.Combo_Product">
+              <MappingFragment StoreEntitySet="Combo_Product">
+                <ScalarProperty Name="comboID" ColumnName="comboID" />
+                <ScalarProperty Name="productID" ColumnName="productID" />
+                <ScalarProperty Name="quantityPCombo" ColumnName="quantityPCombo" />
+                <ScalarProperty Name="descriptionCP" ColumnName="descriptionCP" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Combos">
+            <EntityTypeMapping TypeName="Almacenes_DB2Model.Combo">
+              <MappingFragment StoreEntitySet="Combos">
+                <ScalarProperty Name="comboID" ColumnName="comboID" />
+                <ScalarProperty Name="descriptionC" ColumnName="descriptionC" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="Almacenes_DB2Model.Customer">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="customerID" ColumnName="customerID" />
+                <ScalarProperty Name="telephone" ColumnName="telephone" />
+                <ScalarProperty Name="customerName" ColumnName="customerName" />
+                <ScalarProperty Name="identificationCard" ColumnName="identificationCard" />
+                <ScalarProperty Name="routeID" ColumnName="routeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Deliveries">
+            <EntityTypeMapping TypeName="Almacenes_DB2Model.Delivery">
+              <MappingFragment StoreEntitySet="Delivery">
+                <ScalarProperty Name="deliveryID" ColumnName="deliveryID" />
+                <ScalarProperty Name="deliveryName" ColumnName="deliveryName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Detail_Order">
+            <EntityTypeMapping TypeName="Almacenes_DB2Model.Detail_Order">
+              <MappingFragment StoreEntitySet="Detail_Order">
+                <ScalarProperty Name="orderID" ColumnName="orderID" />
+                <ScalarProperty Name="productID" ColumnName="productID" />
+                <ScalarProperty Name="quantityPOrder" ColumnName="quantityPOrder" />
+                <ScalarProperty Name="descriptionDO" ColumnName="descriptionDO" />
+                <ScalarProperty Name="discount" ColumnName="discount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="Almacenes_DB2Model.Employee">
+              <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="employeesID" ColumnName="employeesID" />
+                <ScalarProperty Name="employeeName" ColumnName="employeeName" />
+                <ScalarProperty Name="employeeLastName" ColumnName="employeeLastName" />
+                <ScalarProperty Name="e_UserName" ColumnName="e_UserName" />
+                <ScalarProperty Name="e_Password" ColumnName="e_Password" />
+                <ScalarProperty Name="typeEmployee" ColumnName="typeEmployee" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="Almacenes_DB2Model.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="orderID" ColumnName="orderID" />
+                <ScalarProperty Name="dateOrder" ColumnName="dateOrder" />
+                <ScalarProperty Name="status1" ColumnName="status1" />
+                <ScalarProperty Name="status2" ColumnName="status2" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="deliveryDay" ColumnName="deliveryDay" />
+                <ScalarProperty Name="typeOfSale" ColumnName="typeOfSale" />
+                <ScalarProperty Name="totalDiscount" ColumnName="totalDiscount" />
+                <ScalarProperty Name="routeID" ColumnName="routeID" />
+                <ScalarProperty Name="customerID" ColumnName="customerID" />
+                <ScalarProperty Name="deliveryID" ColumnName="deliveryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="Almacenes_DB2Model.Product">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="productID" ColumnName="productID" />
+                <ScalarProperty Name="productName" ColumnName="productName" />
+                <ScalarProperty Name="productPresentation" ColumnName="productPresentation" />
+                <ScalarProperty Name="costPrice" ColumnName="costPrice" />
+                <ScalarProperty Name="salePrice" ColumnName="salePrice" />
+                <ScalarProperty Name="unitInStop" ColumnName="unitInStop" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Routes">
+            <EntityTypeMapping TypeName="Almacenes_DB2Model.Route">
+              <MappingFragment StoreEntitySet="Routes">
+                <ScalarProperty Name="routeID" ColumnName="routeID" />
+                <ScalarProperty Name="routeName" ColumnName="routeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Routes_Delivery">
+            <EntityTypeMapping TypeName="Almacenes_DB2Model.Routes_Delivery">
+              <MappingFragment StoreEntitySet="Routes_Delivery">
+                <ScalarProperty Name="routeID" ColumnName="routeID" />
+                <ScalarProperty Name="deliveryID" ColumnName="deliveryID" />
+                <ScalarProperty Name="descriptionRD" ColumnName="descriptionRD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
