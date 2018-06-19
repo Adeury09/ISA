@@ -105,7 +105,7 @@ namespace Invecam_S_A
                     var query = (from p in entidad.Products
                                  where p.productName == celda
                                  select p).FirstOrDefault();
-
+                    //buscar exprecion lanta para que en casos de se null
                     query.productName = txtProducto.Text;
                     query.productPresentation = txtPresentacion.Text;
                     query.costPrice = float.Parse(txtPrecioCosto.Text);
