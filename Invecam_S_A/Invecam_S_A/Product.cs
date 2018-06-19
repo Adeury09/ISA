@@ -27,6 +27,10 @@ namespace Invecam_S_A
         public Nullable<double> costPrice { get; set; }
         public Nullable<double> salePrice { get; set; }
         public Nullable<int> unitInStop { get; set; }
+        public Nullable<double> retailSalePrice { get; set; }
+        public Nullable<double> wholeSalePrice { get; set; }
+        public Nullable<int> retailQuantity { get; set; }
+        public Nullable<int> wholeQuantity { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Combo_Product> Combo_Product { get; set; }

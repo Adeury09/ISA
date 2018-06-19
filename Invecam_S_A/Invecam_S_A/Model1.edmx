@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Almacenes_DB2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Almacenes_DB2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Combo_Product">
           <Key>
             <PropertyRef Name="comboID" />
@@ -87,6 +87,10 @@
           <Property Name="costPrice" Type="float" />
           <Property Name="salePrice" Type="float" />
           <Property Name="unitInStop" Type="int" />
+          <Property Name="retailSalePrice" Type="float" />
+          <Property Name="wholeSalePrice" Type="float" />
+          <Property Name="retailQuantity" Type="int" />
+          <Property Name="wholeQuantity" Type="int" />
         </EntityType>
         <EntityType Name="Routes">
           <Key>
@@ -276,8 +280,7 @@
             <End Role="Routes_Delivery" EntitySet="Routes_Delivery" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Almacenes_DB2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -378,6 +381,10 @@
           <Property Name="unitInStop" Type="Int32" />
           <NavigationProperty Name="Combo_Product" Relationship="Self.FK_productID_CP" FromRole="Products" ToRole="Combo_Product" />
           <NavigationProperty Name="Detail_Order" Relationship="Self.FK_productID_DO" FromRole="Products" ToRole="Detail_Order" />
+          <Property Name="retailSalePrice" Type="Double" />
+          <Property Name="wholeSalePrice" Type="Double" />
+          <Property Name="retailQuantity" Type="Int32" />
+          <Property Name="wholeQuantity" Type="Int32" />
         </EntityType>
         <EntityType Name="Route">
           <Key>
@@ -658,6 +665,10 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="Almacenes_DB2Model.Product">
               <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="wholeQuantity" ColumnName="wholeQuantity" />
+                <ScalarProperty Name="retailQuantity" ColumnName="retailQuantity" />
+                <ScalarProperty Name="wholeSalePrice" ColumnName="wholeSalePrice" />
+                <ScalarProperty Name="retailSalePrice" ColumnName="retailSalePrice" />
                 <ScalarProperty Name="productID" ColumnName="productID" />
                 <ScalarProperty Name="productName" ColumnName="productName" />
                 <ScalarProperty Name="productPresentation" ColumnName="productPresentation" />
