@@ -20,6 +20,6 @@ namespace Invecam_S_A
         public string descriptionCP { get; set; }
     
         public virtual Combo Combo { get; set; }
-        public virtual Product Product { get; set; }
+        public virtual Products Product { get; set; }
     }
 }

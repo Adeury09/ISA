@@ -104,14 +104,14 @@
     <Compile Include="Order.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
-    <Compile Include="Product.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Productos.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Productos.Designer.cs">
       <DependentUpon>Productos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Products.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -119,6 +119,9 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Routes_Delivery.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="State.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Productos.resx">

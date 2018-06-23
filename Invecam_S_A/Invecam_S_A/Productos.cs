@@ -32,7 +32,8 @@ namespace Invecam_S_A
 
         public void queryDefault()
         {
-            dataGridView1.DataSource = dataGridView2.DataSource = (from p in entidad.Products
+            dataGridView1.DataSource = dataGridView2.DataSource = (from p in entidad.Products1
+                                                                   where p.stateID == 1
                                         orderby p.productName
                                         select new
                                         {
@@ -41,10 +42,10 @@ namespace Invecam_S_A
                                             Precio_de_costo = p.costPrice,
                                             Precio_de_venta = p.salePrice,
                                             Cantidad = p.unitInStop,
-                                            Cantidad_Por_Mayor = p.wholeQuantity,
-                                            Precio_al_por_Mayor = p.wholeSalePrice,
-                                            Cantidad_por_Menor = p.retailQuantity,
-                                            Precio_al_por_Menor = p.retailSalePrice
+                                            Cantidad_X_Mayor = p.wholeQuantity,
+                                            Precio_al_X_Mayor = p.wholeSalePrice,
+                                            Cantidad_X_Menor = p.retailQuantity,
+                                            Precio_al_X_Menor = p.retailSalePrice
                                         }).ToList();
         }
 
@@ -97,45 +98,56 @@ namespace Invecam_S_A
             {
                 //productsBindingSource.EndEdit();
                 panel1.Enabled = false;
+                Products product;
 
                 if (editando)
                 {
                     String celda = dataGridView2.Rows[dataGridView2.CurrentCell.RowIndex].Cells[0].Value.ToString();
 
-                    var query = (from p in entidad.Products
+                    var query = (from p in entidad.Products1
                                  where p.productName == celda
                                  select p).FirstOrDefault();
                     //buscar exprecion lanta para que en casos de se null
-                    query.productName = txtProducto.Text;
-                    query.productPresentation = txtPresentacion.Text;
-                    query.costPrice = float.Parse(txtPrecioCosto.Text);
-                    query.salePrice = float.Parse(txtPrecioVenta.Text);
-                    query.unitInStop = int.Parse(txtCatidad.Text);
-                    query.wholeSalePrice = float.Parse(txtPMayor.Text);
-                    query.wholeQuantity = int.Parse(txtCantidadPMayor.Text);
-                    query.retailSalePrice = float.Parse(txtPMenor.Text);
-                    query.retailQuantity = int.Parse(txtCantdadPMenor.Text);
+                    query.stateID = 2;
+                    product = new Products
+                    {
+                        productName = (txtProducto.Text == "") ? query.productName : txtProducto.Text,
+                        productPresentation = (txtPresentacion.Text == "") ? query.productPresentation : txtPresentacion.Text,
+                        salePrice = (txtPrecioVenta.Text == "") ? query.salePrice : float.Parse(txtPrecioVenta.Text),
+                        costPrice = (txtPrecioCosto.Text == "") ? query.costPrice : float.Parse(txtPrecioCosto.Text),
+                        unitInStop = (txtCatidad.Text == "") ? query.unitInStop : int.Parse(txtCatidad.Text),
+                        wholeSalePrice = (txtPMayor.Text == "") ? query.wholeSalePrice : float.Parse(txtPMayor.Text),
+                        wholeQuantity = (txtCantidadPMayor.Text == "") ? query.wholeQuantity : int.Parse(txtCantidadPMayor.Text),
+                        retailSalePrice = (txtPMenor.Text == "") ? query.retailSalePrice : float.Parse(txtPMenor.Text),
+                        retailQuantity = (txtCantdadPMenor.Text == "") ? query.retailQuantity : int.Parse(txtCantdadPMenor.Text),
+                        stateID = 1
+                        
+                    };
+
+                 
 
                     editando = false;
                 }
                 else
                 {
-                    Product product = new Product
-                    {
-                        productName = txtProducto.Text,
-                        productPresentation = txtPresentacion.Text,
-                        salePrice = float.Parse(txtPrecioVenta.Text),
-                        costPrice = float.Parse(txtPrecioCosto.Text),
-                        unitInStop = int.Parse(txtCatidad.Text),
-                        wholeSalePrice = float.Parse(txtPMayor.Text),
-                        wholeQuantity = int.Parse(txtCantidadPMayor.Text),
-                        retailSalePrice = float.Parse(txtPMenor.Text),
-                        retailQuantity = int.Parse(txtCantdadPMenor.Text)
+                    product = new Products
+                    { //poner en caso de se "" null
+                        productName = (txtProducto.Text != "")? txtProducto.Text : null,
+                        productPresentation = (txtPresentacion.Text != "")? txtPresentacion.Text:null,
+                        salePrice = (txtPrecioVenta.Text != "") ? float.Parse(txtPrecioVenta.Text) : 0.0,
+                        costPrice = (txtPrecioCosto.Text != "") ?float.Parse(txtPrecioCosto.Text) :0.0,
+                        unitInStop = (txtCatidad.Text != "")? int.Parse(txtCatidad.Text):0,
+                        wholeSalePrice = (txtPMayor.Text != "")? float.Parse(txtPMayor.Text):0.0,
+                        wholeQuantity = (txtCantidadPMayor.Text != "") ? int.Parse(txtCantidadPMayor.Text) : 0,
+                        retailSalePrice = (txtPMenor.Text != "")? float.Parse(txtPMenor.Text):0.0,
+                        retailQuantity = (txtCantdadPMenor.Text != "")? int.Parse(txtCantdadPMenor.Text):0,
+                        stateID = 1
                     };
 
-                    entidad.Products.Add(product);
+                    
                     
                 }
+                entidad.Products1.Add(product);
                 entidad.SaveChanges();
                 this.limpiar();
                 this.queryDefault();
@@ -174,10 +186,10 @@ namespace Invecam_S_A
             {
                 
 
-                var query = (from p in entidad.Products
+                var query = (from p in entidad.Products1
                              where p.productName.Contains(celda)
                              select p).FirstOrDefault();
-                entidad.Products.Remove(query);
+                entidad.Products1.Remove(query);
                 entidad.SaveChanges();
 
                 this.queryDefault();
@@ -245,8 +257,8 @@ namespace Invecam_S_A
                 }
                 else
                 {
-                    dataGridView2.DataSource = (from p in entidad.Products
-                                                where p.productName.Contains(textBuscar2.Text) || p.productPresentation.Contains(textBuscar2.Text)
+                    dataGridView2.DataSource = (from p in entidad.Products1
+                                                where  p.stateID==1 && p.productName.Contains(textBuscar2.Text) || p.productPresentation.Contains(textBuscar2.Text) 
                                                 orderby p.productName
                                                 select new
                                                 {
@@ -278,8 +290,8 @@ namespace Invecam_S_A
             }
             else
             {
-                dataGridView2.DataSource = (from p in entidad.Products
-                                            where p.productName.Contains(textBuscar2.Text) || p.productPresentation.Contains(textBuscar2.Text)
+                dataGridView2.DataSource = (from p in entidad.Products1
+                                            where p.stateID == 1 && p.productName.Contains(textBuscar2.Text) || p.productPresentation.Contains(textBuscar2.Text)
                                             orderby p.productName
                                             select new
                                             {
@@ -307,8 +319,8 @@ namespace Invecam_S_A
                 }
                 else
                 {
-                    dataGridView2.DataSource = (from p in entidad.Products
-                                                where p.productName.Contains(textBuscar1.Text.Trim()) || p.productPresentation.Contains(textBuscar1.Text.Trim())
+                    dataGridView2.DataSource = (from p in entidad.Products1
+                                                where p.stateID == 1 && p.productName.Contains(textBuscar1.Text.Trim()) || p.productPresentation.Contains(textBuscar1.Text.Trim())
                                                 orderby p.productName
                                                 select new
                                                 {
@@ -336,8 +348,8 @@ namespace Invecam_S_A
             }
             else
             {
-                dataGridView2.DataSource = (from p in entidad.Products
-                                            where p.productName.Contains(textBuscar1.Text.Trim()) || p.productPresentation.Contains(textBuscar1.Text.Trim())
+                dataGridView2.DataSource = (from p in entidad.Products1
+                                            where p.stateID == 1 && p.productName.Contains(textBuscar1.Text.Trim()) || p.productPresentation.Contains(textBuscar1.Text.Trim())
                                             orderby p.productName
                                             select new
                                             {
@@ -361,7 +373,8 @@ namespace Invecam_S_A
 
         private void btnOrdIngreso_Click(object sender, EventArgs e)
         {
-            dataGridView1.DataSource = (from p in entidad.Products
+            dataGridView1.DataSource = (from p in entidad.Products1
+                                        where p.stateID == 1
                                         orderby p.productID
                                         select new
                                         {
@@ -379,7 +392,8 @@ namespace Invecam_S_A
 
         private void btnOrdNombre_Click(object sender, EventArgs e)
         {
-            dataGridView1.DataSource = (from p in entidad.Products
+            dataGridView1.DataSource = (from p in entidad.Products1
+                                        where p.stateID == 1
                                         orderby p.productID
                                         select new
                                         {
@@ -397,7 +411,8 @@ namespace Invecam_S_A
 
         private void btnOrdPresentacion_Click(object sender, EventArgs e)
         {
-            dataGridView1.DataSource = (from p in entidad.Products
+            dataGridView1.DataSource = (from p in entidad.Products1
+                                        where p.stateID == 1
                                         orderby p.productPresentation
                                         select new
                                         {
@@ -415,7 +430,8 @@ namespace Invecam_S_A
 
         private void btnOrdPCosto_Click(object sender, EventArgs e)
         {
-            dataGridView1.DataSource = (from p in entidad.Products
+            dataGridView1.DataSource = (from p in entidad.Products1
+                                        where p.stateID == 1
                                         orderby p.costPrice
                                         select new
                                         {
@@ -433,7 +449,8 @@ namespace Invecam_S_A
 
         private void btnOrdPVenta_Click(object sender, EventArgs e)
         {
-            dataGridView1.DataSource = (from p in entidad.Products
+            dataGridView1.DataSource = (from p in entidad.Products1
+                                        where p.stateID == 1
                                         orderby p.salePrice
                                         select new
                                         {
@@ -451,7 +468,8 @@ namespace Invecam_S_A
 
         private void btnOrdCantidad_Click(object sender, EventArgs e)
         {
-            dataGridView1.DataSource = (from p in entidad.Products
+            dataGridView1.DataSource = (from p in entidad.Products1
+                                        where p.stateID == 1
                                         orderby p.unitInStop
                                         select new
                                         {
@@ -469,7 +487,8 @@ namespace Invecam_S_A
 
         private void btnOrdPMayor_Click(object sender, EventArgs e)
         {
-            dataGridView1.DataSource = (from p in entidad.Products
+            dataGridView1.DataSource = (from p in entidad.Products1
+                                        where p.stateID == 1
                                         orderby p.wholeSalePrice
                                         select new
                                         {
@@ -487,7 +506,8 @@ namespace Invecam_S_A
 
         private void btnOrdPMenor_Click(object sender, EventArgs e)
         {
-            dataGridView1.DataSource = (from p in entidad.Products
+            dataGridView1.DataSource = (from p in entidad.Products1
+                                        where p.stateID == 1
                                         orderby p.retailSalePrice
                                         select new
                                         {
@@ -505,7 +525,8 @@ namespace Invecam_S_A
 
         private void btnOrdCMayor_Click(object sender, EventArgs e)
         {
-            dataGridView1.DataSource = (from p in entidad.Products
+            dataGridView1.DataSource = (from p in entidad.Products1
+                                        where p.stateID == 1
                                         orderby p.wholeQuantity
                                         select new
                                         {
@@ -523,7 +544,8 @@ namespace Invecam_S_A
 
         private void btnOrdCMenor_Click(object sender, EventArgs e)
         {
-            dataGridView1.DataSource = (from p in entidad.Products
+            dataGridView1.DataSource = (from p in entidad.Products1
+                                        where p.stateID == 1
                                         orderby p.retailQuantity
                                         select new
                                         {

@@ -11,8 +11,8 @@
         <EntityTypeShape EntityType="Almacenes_DB2Model.Delivery" Width="1.5" PointX="0.75" PointY="8.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Almacenes_DB2Model.Detail_Order" Width="1.5" PointX="7.5" PointY="4.875" IsExpanded="true" />
         <EntityTypeShape EntityType="Almacenes_DB2Model.Employee" Width="1.5" PointX="7.75" PointY="8.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="Almacenes_DB2Model.Order" Width="1.5" PointX="5.25" PointY="4.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="Almacenes_DB2Model.Product" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Almacenes_DB2Model.Order" Width="1.5" PointX="5.25" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Almacenes_DB2Model.Products" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Almacenes_DB2Model.Route" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
         <EntityTypeShape EntityType="Almacenes_DB2Model.Routes_Delivery" Width="1.5" PointX="3" PointY="2" IsExpanded="true" />
         <AssociationConnector Association="Almacenes_DB2Model.FK_comboID_CP" ManuallyRouted="false" />
@@ -25,6 +25,9 @@
         <AssociationConnector Association="Almacenes_DB2Model.FK_productID_DO" ManuallyRouted="false" />
         <AssociationConnector Association="Almacenes_DB2Model.FK_routeID_Orders" ManuallyRouted="false" />
         <AssociationConnector Association="Almacenes_DB2Model.FK_routeID_RD" ManuallyRouted="false" />
+        <AssociationConnector Association="Almacenes_DB2Model.FK_order_employees" />
+        <EntityTypeShape EntityType="Almacenes_DB2Model.State" Width="1.5" PointX="3" PointY="8.75" />
+        <AssociationConnector Association="Almacenes_DB2Model.FK_Products_States" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

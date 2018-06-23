@@ -21,6 +21,6 @@ namespace Invecam_S_A
         public Nullable<int> discount { get; set; }
     
         public virtual Order Order { get; set; }
-        public virtual Product Product { get; set; }
+        public virtual Products Product { get; set; }
     }
 }

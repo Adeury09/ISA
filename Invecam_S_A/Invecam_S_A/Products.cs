@@ -12,10 +12,10 @@ namespace Invecam_S_A
     using System;
     using System.Collections.Generic;
     
-    public partial class Product
+    public partial class Products
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Product()
+        public Products()
         {
             this.Combo_Product = new HashSet<Combo_Product>();
             this.Detail_Order = new HashSet<Detail_Order>();
@@ -31,10 +31,12 @@ namespace Invecam_S_A
         public Nullable<double> wholeSalePrice { get; set; }
         public Nullable<int> retailQuantity { get; set; }
         public Nullable<int> wholeQuantity { get; set; }
+        public Nullable<int> stateID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Combo_Product> Combo_Product { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Detail_Order> Detail_Order { get; set; }
+        public virtual State State { get; set; }
     }
 }

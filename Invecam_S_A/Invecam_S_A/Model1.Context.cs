@@ -32,8 +32,9 @@ namespace Invecam_S_A
         public virtual DbSet<Detail_Order> Detail_Order { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
-        public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<Products> Products1 { get; set; }
         public virtual DbSet<Route> Routes { get; set; }
         public virtual DbSet<Routes_Delivery> Routes_Delivery { get; set; }
+        public virtual DbSet<State> States { get; set; }
     }
 }

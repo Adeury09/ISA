@@ -76,6 +76,7 @@
           <Property Name="routeID" Type="int" Nullable="false" />
           <Property Name="customerID" Type="int" Nullable="false" />
           <Property Name="deliveryID" Type="int" Nullable="false" />
+          <Property Name="employeeesID" Type="int" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -91,6 +92,7 @@
           <Property Name="wholeSalePrice" Type="float" />
           <Property Name="retailQuantity" Type="int" />
           <Property Name="wholeQuantity" Type="int" />
+          <Property Name="stateID" Type="int" />
         </EntityType>
         <EntityType Name="Routes">
           <Key>
@@ -107,6 +109,13 @@
           <Property Name="routeID" Type="int" Nullable="false" />
           <Property Name="deliveryID" Type="int" Nullable="false" />
           <Property Name="descriptionRD" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="States">
+          <Key>
+            <PropertyRef Name="stateID" />
+          </Key>
+          <Property Name="stateID" Type="int" Nullable="false" />
+          <Property Name="descriptionState" Type="varchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_comboID_CP">
           <End Role="Combos" Type="Self.Combos" Multiplicity="1" />
@@ -156,6 +165,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_order_employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="employeesID" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="employeeesID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_orderID_DO">
           <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
           <End Role="Detail_Order" Type="Self.Detail_Order" Multiplicity="*" />
@@ -189,6 +210,18 @@
             </Principal>
             <Dependent Role="Detail_Order">
               <PropertyRef Name="productID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_States">
+          <End Role="States" Type="Self.States" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="States">
+              <PropertyRef Name="stateID" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="stateID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -239,6 +272,7 @@
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Routes" EntityType="Self.Routes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Routes_Delivery" EntityType="Self.Routes_Delivery" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="States" EntityType="Self.States" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_comboID_CP" Association="Self.FK_comboID_CP">
             <End Role="Combos" EntitySet="Combos" />
             <End Role="Combo_Product" EntitySet="Combo_Product" />
@@ -255,6 +289,10 @@
             <End Role="Delivery" EntitySet="Delivery" />
             <End Role="Routes_Delivery" EntitySet="Routes_Delivery" />
           </AssociationSet>
+          <AssociationSet Name="FK_order_employees" Association="Self.FK_order_employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
           <AssociationSet Name="FK_orderID_DO" Association="Self.FK_orderID_DO">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="Detail_Order" EntitySet="Detail_Order" />
@@ -266,6 +304,10 @@
           <AssociationSet Name="FK_productID_DO" Association="Self.FK_productID_DO">
             <End Role="Products" EntitySet="Products" />
             <End Role="Detail_Order" EntitySet="Detail_Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_States" Association="Self.FK_Products_States">
+            <End Role="States" EntitySet="States" />
+            <End Role="Products" EntitySet="Products" />
           </AssociationSet>
           <AssociationSet Name="FK_routeID_CUSTOMERS" Association="Self.FK_routeID_CUSTOMERS">
             <End Role="Routes" EntitySet="Routes" />
@@ -348,6 +390,7 @@
           <Property Name="e_UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="e_Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="typeEmployee" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Orders" Relationship="Almacenes_DB2Model.FK_order_employees" FromRole="Employee" ToRole="Order" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -368,8 +411,10 @@
           <NavigationProperty Name="Delivery" Relationship="Self.FK_deliveryID_Orders" FromRole="Orders" ToRole="Delivery" />
           <NavigationProperty Name="Detail_Order" Relationship="Self.FK_orderID_DO" FromRole="Orders" ToRole="Detail_Order" />
           <NavigationProperty Name="Route" Relationship="Self.FK_routeID_Orders" FromRole="Orders" ToRole="Routes" />
+          <Property Name="employeeesID" Type="Int32" />
+          <NavigationProperty Name="Employee" Relationship="Almacenes_DB2Model.FK_order_employees" FromRole="Order" ToRole="Employee" />
         </EntityType>
-        <EntityType Name="Product">
+        <EntityType Name="Products">
           <Key>
             <PropertyRef Name="productID" />
           </Key>
@@ -385,6 +430,8 @@
           <Property Name="wholeSalePrice" Type="Double" />
           <Property Name="retailQuantity" Type="Int32" />
           <Property Name="wholeQuantity" Type="Int32" />
+          <Property Name="stateID" Type="Int32" />
+          <NavigationProperty Name="State" Relationship="Almacenes_DB2Model.FK_Products_States" FromRole="Product" ToRole="State" />
         </EntityType>
         <EntityType Name="Route">
           <Key>
@@ -420,7 +467,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_productID_CP">
-          <End Role="Products" Type="Self.Product" Multiplicity="1" />
+          <End Role="Products" Type="Almacenes_DB2Model.Products" Multiplicity="1" />
           <End Role="Combo_Product" Type="Self.Combo_Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Products">
@@ -492,7 +539,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_productID_DO">
-          <End Role="Products" Type="Self.Product" Multiplicity="1" />
+          <End Role="Products" Type="Almacenes_DB2Model.Products" Multiplicity="1" />
           <End Role="Detail_Order" Type="Self.Detail_Order" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Products">
@@ -535,7 +582,7 @@
           <EntitySet Name="Detail_Order" EntityType="Self.Detail_Order" />
           <EntitySet Name="Employees" EntityType="Self.Employee" />
           <EntitySet Name="Orders" EntityType="Self.Order" />
-          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="Products1" EntityType="Almacenes_DB2Model.Products" />
           <EntitySet Name="Routes" EntityType="Self.Route" />
           <EntitySet Name="Routes_Delivery" EntityType="Self.Routes_Delivery" />
           <AssociationSet Name="FK_comboID_CP" Association="Self.FK_comboID_CP">
@@ -543,7 +590,7 @@
             <End Role="Combo_Product" EntitySet="Combo_Product" />
           </AssociationSet>
           <AssociationSet Name="FK_productID_CP" Association="Self.FK_productID_CP">
-            <End Role="Products" EntitySet="Products" />
+            <End Role="Products" EntitySet="Products1" />
             <End Role="Combo_Product" EntitySet="Combo_Product" />
           </AssociationSet>
           <AssociationSet Name="FK_customerID_Orders" Association="Self.FK_customerID_Orders">
@@ -567,7 +614,7 @@
             <End Role="Detail_Order" EntitySet="Detail_Order" />
           </AssociationSet>
           <AssociationSet Name="FK_productID_DO" Association="Self.FK_productID_DO">
-            <End Role="Products" EntitySet="Products" />
+            <End Role="Products" EntitySet="Products1" />
             <End Role="Detail_Order" EntitySet="Detail_Order" />
           </AssociationSet>
           <AssociationSet Name="FK_routeID_Orders" Association="Self.FK_routeID_Orders">
@@ -578,7 +625,48 @@
             <End Role="Routes" EntitySet="Routes" />
             <End Role="Routes_Delivery" EntitySet="Routes_Delivery" />
           </AssociationSet>
+          <AssociationSet Name="FK_order_employees" Association="Almacenes_DB2Model.FK_order_employees">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <EntitySet Name="States" EntityType="Almacenes_DB2Model.State" />
+          <AssociationSet Name="FK_Products_States" Association="Almacenes_DB2Model.FK_Products_States">
+            <End Role="State" EntitySet="States" />
+            <End Role="Product" EntitySet="Products1" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK_order_employees">
+          <End Type="Almacenes_DB2Model.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="Almacenes_DB2Model.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="employeesID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="employeeesID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="stateID" />
+          </Key>
+          <Property Name="stateID" Type="Int32" Nullable="false" />
+          <Property Name="descriptionState" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Products" Relationship="Almacenes_DB2Model.FK_Products_States" FromRole="State" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK_Products_States">
+          <End Type="Almacenes_DB2Model.State" Role="State" Multiplicity="0..1" />
+          <End Type="Almacenes_DB2Model.Products" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="stateID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="stateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -648,6 +736,7 @@
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="Almacenes_DB2Model.Order">
               <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="employeeesID" ColumnName="employeeesID" />
                 <ScalarProperty Name="orderID" ColumnName="orderID" />
                 <ScalarProperty Name="dateOrder" ColumnName="dateOrder" />
                 <ScalarProperty Name="status1" ColumnName="status1" />
@@ -662,9 +751,10 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Products">
-            <EntityTypeMapping TypeName="Almacenes_DB2Model.Product">
+          <EntitySetMapping Name="Products1">
+            <EntityTypeMapping TypeName="Almacenes_DB2Model.Products">
               <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="stateID" ColumnName="stateID" />
                 <ScalarProperty Name="wholeQuantity" ColumnName="wholeQuantity" />
                 <ScalarProperty Name="retailQuantity" ColumnName="retailQuantity" />
                 <ScalarProperty Name="wholeSalePrice" ColumnName="wholeSalePrice" />
@@ -692,6 +782,14 @@
                 <ScalarProperty Name="routeID" ColumnName="routeID" />
                 <ScalarProperty Name="deliveryID" ColumnName="deliveryID" />
                 <ScalarProperty Name="descriptionRD" ColumnName="descriptionRD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="States">
+            <EntityTypeMapping TypeName="Almacenes_DB2Model.State">
+              <MappingFragment StoreEntitySet="States">
+                <ScalarProperty Name="descriptionState" ColumnName="descriptionState" />
+                <ScalarProperty Name="stateID" ColumnName="stateID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

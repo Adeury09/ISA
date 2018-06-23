@@ -12,22 +12,18 @@ namespace Invecam_S_A
     using System;
     using System.Collections.Generic;
     
-    public partial class Employee
+    public partial class State
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Employee()
+        public State()
         {
-            this.Orders = new HashSet<Order>();
+            this.Products = new HashSet<Products>();
         }
     
-        public int employeesID { get; set; }
-        public string employeeName { get; set; }
-        public string employeeLastName { get; set; }
-        public string e_UserName { get; set; }
-        public string e_Password { get; set; }
-        public string typeEmployee { get; set; }
+        public int stateID { get; set; }
+        public string descriptionState { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<Products> Products { get; set; }
     }
 }
